@@ -33,7 +33,7 @@ class Scream extends Component {
     const { classes, scream: {
       body, createdAt, imageUrl, userHandle, likeCount, commentCount, screamId
     } } = this.props;
-
+    console.log(`PROPS: `, this.props);
     return (
       <Card className={classes.card}>
         <CardMedia

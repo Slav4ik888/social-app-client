@@ -49,12 +49,34 @@ export const logoutUser = () => (dispatch) => {
 };
 
 export const getUserData = () => (dispatch) => {
+  dispatch({type: userActionType.LOADING_USER});
   return axios.get(`/user`)
     .then((res) => {
+      console.log(`1: `, res.data);
       dispatch({
         type: userActionType.SET_USER,
         payload: res.data,
       });
+    })
+    .catch((err) => console.log(`77: `, err));
+};
+
+export const uploadImage = (formData) => (dispatch) => {
+  console.log('formData: ', formData);
+  dispatch({stype: userActionType.LOADING_USER});
+  return axios.post(`/user/image`, formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
+};
+
+export const editUserDetails = (userDetails) => (dispatch) => {
+  dispatch({type: userActionType.LOADING_USER});
+  return axios
+    .post(`/user`, userDetails)
+    .then(() => {
+      dispatch(getUserData());
     })
     .catch((err) => console.log(err));
 };

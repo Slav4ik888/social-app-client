@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
-// import Profile from '@material-ui/core/Profile';
 
 import Scream from '../components/scream';
+import Profile from '../components/profile';
 
 axios.defaults.baseURL =
   `https://europe-west1-socialapp-103bb.cloudfunctions.net/api`;
@@ -40,7 +40,7 @@ class Home extends Component {
           {recentScreamsMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          {/* <Profile...</p> */}
+          <Profile />
         </Grid>
       </Grid>
     );

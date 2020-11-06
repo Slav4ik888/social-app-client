@@ -4,10 +4,10 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 // Redux
 import store from './redux/store';
-import {userActionType} from './redux/types';
 import {logoutUser, getUserData} from './redux/actions/user-actions';
+import {userActionType} from './redux/types';
 // MUI Stuff
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import {ThemeProvider} from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import themeFile from './utils/theme';
 // Components
@@ -25,12 +25,11 @@ const theme = createMuiTheme(themeFile);
 
 const token = localStorage.FBidToken;
 if (token && !token.includes(`Bearer undefined`)) {
-  console.log(`token: `, token);
+  // console.log(`token: `, token);
   const decodedToken = jwtDecode(token);
-  console.log(`decodedToken: `, decodedToken);
-  if (decodedToken * 1000 < Date.now) {
+  // console.log(`decodedToken: `, decodedToken);
+  if (decodedToken.exp * 1000 < new Date(Date.now())) {
     store.dispatch(logoutUser());
-    window.location.href(`/login`);
   } else {
     store.dispatch({type: userActionType.SET_AUTHENTICATED});
     axios.defaults.headers.common[`Authorization`] = token;
@@ -41,7 +40,7 @@ if (token && !token.includes(`Bearer undefined`)) {
 const App = () => {
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Router>
         <div className="container">
           <Navbar />
@@ -64,7 +63,7 @@ const App = () => {
           </Switch>
         </div>
       </Router>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

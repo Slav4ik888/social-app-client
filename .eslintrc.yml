@@ -5,14 +5,19 @@ env:
 
 extends: ["htmlacademy/es6", "plugin:react/recommended"]
 
+parser: "babel-eslint"
 parserOptions:
   ecmaFeatures:
     jsx: true
+
   ecmaVersion: 6
   sourceType: module
-
 plugins: ["react"]
-rules: { "no-console": "off" }
+rules: {
+  "no-console": "off" 
+  'prefer-spread': true,
+  'rest-spread-spacing': true,
+}
 settings:
   react:
     version: "16"
