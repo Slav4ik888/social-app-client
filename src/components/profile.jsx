@@ -8,11 +8,9 @@ import {connect} from 'react-redux';
 import {uploadImage, logoutUser} from '../redux/actions/user-actions';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Tooltip from '@material-ui/core/Tooltip';
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
@@ -21,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 // Component
 import EditDetails from './edit-details';
+import MyButton from './button/button';
 
 // const styles = (theme) => ({
 //   ...theme
@@ -121,11 +120,9 @@ class Profile extends Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <Tooltip title="Обновить аватарку" placement="top" arrow>
-                <IconButton onClick={this.handleEditPicture} className="button">
+              <MyButton title="Обновить аватарку"onClick={this.handleEditPicture} className="button" placement={"top"}>
                   <EditIcon color="primary" />
-                </IconButton>
-              </Tooltip>
+              </MyButton>
             </div>
             <hr />
             <div className="profile-details">
@@ -157,11 +154,10 @@ class Profile extends Component {
               }
               <CalendarToday color="primary" />{` `}  <span>Joined {dayjs(createdAt).format(`MMM YYYY`)}</span>
             </div>
-            <Tooltip title="Выйти из аккаунта" placement="top" arrow>
-              <IconButton onClick={this.handleLogout}>
-                <KeyboardReturn color="primary" />
-              </IconButton>
-            </Tooltip>
+            <MyButton title="Выйти из аккаунта" onClick={this.handleLogout} className="button" placement={"top"}>
+              <KeyboardReturn color="primary" />
+            </MyButton>
+            
             <EditDetails />
           </div>
         </Paper>

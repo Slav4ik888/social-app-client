@@ -5,6 +5,7 @@ import axios from 'axios';
 axios.defaults.baseURL =
   `https://europe-west1-socialapp-103bb.cloudfunctions.net/api`;
 
+
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({type: uiActionType.LOADING_UI});
   return axios.post(`/login`, userData)
@@ -52,18 +53,17 @@ export const getUserData = () => (dispatch) => {
   dispatch({type: userActionType.LOADING_USER});
   return axios.get(`/user`)
     .then((res) => {
-      console.log(`1: `, res.data);
       dispatch({
         type: userActionType.SET_USER,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(`77: `, err));
+    .catch((err) => console.log(err));
 };
 
 export const uploadImage = (formData) => (dispatch) => {
   console.log('formData: ', formData);
-  dispatch({stype: userActionType.LOADING_USER});
+  dispatch({type: userActionType.LOADING_USER});
   return axios.post(`/user/image`, formData)
     .then(() => {
       dispatch(getUserData());

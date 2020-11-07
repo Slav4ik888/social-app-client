@@ -1,4 +1,4 @@
-import {userActionType} from '../types';
+import {userActionType, dataActionType} from '../types';
 import {extend} from '../../utils/utils';
 const initialState = {
   authenticated: false,
@@ -31,6 +31,20 @@ export default function (state = initialState, action) {
         likes: action.payload.likes,
         notifications: action.payload.notifications,
       };
+    case dataActionType.LIKE_SCREAM:
+      console.log(state);
+      return extend(state, {
+        likes: [...state.likes,
+        {
+          userHandle: state.credentials.handle,
+          screamId: action.payload.screamId,
+        }
+        ],
+      });
+    case dataActionType.UNLIKE_SCREAM:
+      return extend(state, {
+        likes: state.likes.filter((like) => like.screamId !== action.payload.screamId),
+      });
     default: return state;
   }
 }

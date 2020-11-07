@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import pt from 'prop-types';
+// Redux stuff
+import {connect} from 'react-redux';
+import {getScreams} from '../redux/actions/data-actions';
+// MUI Stuff
 import Grid from '@material-ui/core/Grid';
-
+// Component
 import Scream from '../components/scream';
 import Profile from '../components/profile';
 
-axios.defaults.baseURL =
-  `https://europe-west1-socialapp-103bb.cloudfunctions.net/api`;
+// axios.defaults.baseURL =
+//   `https://europe-west1-socialapp-103bb.cloudfunctions.net/api`;
 
 class Home extends Component {
   constructor(props) {
@@ -17,20 +21,14 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    return axios.get(`/screams`)
-      .then((res) => {
-        console.log(`res: `, res.data);
-
-        this.setState({
-          screams: res.data
-        });
-      })
-      .catch((err) => console.log(`err: `, err));
+    this.props.getScreams();
   }
 
   render() {
-    let recentScreamsMarkup = this.state.screams ? (
-      this.state.screams.map((scream) => (
+    const {screams, loading} = this.props.data;
+    
+    let recentScreamsMarkup = !loading ? (
+      screams.map((scream) => (
         <Scream key={scream.screamId} scream={scream} />
       ))
     ) : <p>Loading...</p>;
@@ -45,6 +43,14 @@ class Home extends Component {
       </Grid>
     );
   }
-}
+};
 
-export default Home;
+Home.propTypes = {
+  getScreams: pt.func.isRequired,
+  data: pt.object.isRequired,
+}
+const mapStateToProps = (state) => ({
+  data: state.data,
+})
+
+export default connect(mapStateToProps, {getScreams})(Home);
